@@ -1,0 +1,9 @@
+{
+  "serverUrl": "http://localhost:3000",
+  "device": {
+    "name": "Device1",
+    "platform": "ios",
+    "deviceType": "tablet",
+    "osVersion": "6.1"
+  }
+}
