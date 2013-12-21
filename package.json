@@ -1,0 +1,24 @@
+{
+  "name": "mgrid-client",
+  "version": "0.0.1",
+  "description": "Client for mobile grid.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jijeshmohan/mgrid-client.git"
+  },
+  "dependencies": {
+    "socket.io-client": "*"
+  },
+  "keywords": [
+    "mgrid"
+  ],
+  "author": "Jijesh Mohan",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/jijeshmohan/mgrid-client/issues"
+  }
+}
