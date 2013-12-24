@@ -14,5 +14,6 @@ var socket = io.connect(config.serverUrl);
  	});
     socket.on('disconnect', function(){
     	console.log("Disconnected");
+    	process.exit(0);
     });
  });
