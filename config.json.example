@@ -5,5 +5,11 @@
     "platform": "ios",
     "deviceType": "tablet",
     "osVersion": "6.1"
+  },
+ "projectPath": "/path/of/cucumber/project",
+ "environment":{
+ 	"NO_LAUNCH": 1,
+ 	"DEVICE": "ipad",
+ 	"OS": "ios6"
   }
 }
