@@ -1,13 +1,14 @@
 var path = require('path'),
     fs = require('fs'),
     exec = require('child_process').exec;
-
+    mkdirp = require('mkdirp');
+ 
  exports.run = function(socket,id,config){
       var report_folder = new Date().getTime();
       var environment = process.env;
       var path = __dirname + "/" + config.reportDir + "/" + report_folder;
 
-      fs.mkdirSync(path);
+      mkdirp.sync(path);
 
       for(key in config.environment){
         environment[key]=config.environment[key];

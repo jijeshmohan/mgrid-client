@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "socket.io-client": "*",
-    "commandline-parser": "*"
+    "commandline-parser": "*",
+    "mkdirp": "*"
   },
   "keywords": [
     "mgrid"
