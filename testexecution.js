@@ -5,7 +5,7 @@ var path = require('path'),
  exports.run = function(socket,id,config){
       var report_folder = new Date().getTime();
       var environment = process.env;
-      var path = __dirname + "/results/" + report_folder;
+      var path = __dirname + "/" + config.reportDir + "/" + report_folder;
 
       fs.mkdirSync(path);
 
@@ -13,7 +13,7 @@ var path = require('path'),
         environment[key]=config.environment[key];
       }
 
-      var command = 'cucumber -d -f pretty -f json -o '+ path +'/result.json';
+      var command = 'cucumber -d -f json -o '+ path +'/result.json';
 
       var options = {
         cwd: config.projectPath,

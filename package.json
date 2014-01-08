@@ -11,7 +11,8 @@
     "url": "https://github.com/jijeshmohan/mgrid-client.git"
   },
   "dependencies": {
-    "socket.io-client": "*"
+    "socket.io-client": "*",
+    "commandline-parser": "*"
   },
   "keywords": [
     "mgrid"

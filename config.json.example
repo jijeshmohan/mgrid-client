@@ -7,6 +7,7 @@
     "osVersion": "6.1"
   },
  "projectPath": "/path/of/cucumber/project",
+ "reportDir": "results",
  "environment":{
  	"NO_LAUNCH": 1,
  	"DEVICE": "ipad",
