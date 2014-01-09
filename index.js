@@ -11,14 +11,18 @@ var parser = new Parser({
 parser.addArgument('config' ,{
     flags : ['c','config'], 
     desc : "Specify configuration file",
-    action : run
 });
 
-parser.addArgument('c', 'Specify configuration file');
 parser.exec();
 
-function run(value, parser){
-	var config = require(parser.get('c') || './config.json');
+if(parser.get("help")){
+	process.exit(0);
+}
+
+run(parser);
+
+function run( parser){
+	var config = require(parser.get('config') || './config.json');
 	var socket = io.connect(config.serverUrl);
 	var testexecution = require('./testexecution');
 
