@@ -10,7 +10,7 @@ var parser = new Parser({
 
 parser.addArgument('config' ,{
     flags : ['c','config'], 
-    desc : "Specify configuration file",
+    desc : "Specify configuration file ( default is ./config.json )",
 });
 
 parser.exec();
