@@ -6,6 +6,7 @@
     "deviceType": "tablet",
     "osVersion": "6.1"
   },
+ "type":"cucumber",
  "projectPath": "/path/of/cucumber/project",
  "reportDir": "results",
  "environment":{
