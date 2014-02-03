@@ -9,6 +9,7 @@
  "type":"cucumber",
  "projectPath": "/path/of/cucumber/project",
  "reportDir": "results",
+ "apk":"",
  "environment":{
  	"NO_LAUNCH": 1,
  	"DEVICE": "ipad",
