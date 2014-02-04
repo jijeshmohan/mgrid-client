@@ -63,16 +63,12 @@ function waitForDevice () {
 
 function run(){
 	socket=null;
-	console.log('inside Run...');
 	socket = io.connect(config.serverUrl,{'force new connection': true});
-	if(socket){
-		console.log('connection object created');
-	}
 	socket.on('connecting', function () {
 		console.log('connecting....');
 	});
 	socket.on('error', function () {
-		console.log("errorrr");
+		console.log("error while connecting to server");
 	})
 	 socket.on('connect', function(){
 	 	console.log("Device Connected");
