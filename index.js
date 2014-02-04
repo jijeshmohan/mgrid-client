@@ -1,7 +1,11 @@
 var io = require('socket.io-client');
-
+var exec = require('child_process').exec;
 var Parser = require('commandline-parser').Parser;
+var testexecution = require('./testexecution');
 
+var isConnected=false;
+var firstRun=true;
+var socket;
 var parser = new Parser({
         name : "mgrid-client",
         desc : 'Mobile grid client',
@@ -19,16 +23,59 @@ if(parser.get("help")){
 	process.exit(0);
 }
 
-run(parser);
+var config = require(parser.get('config') || './config.json');
 
-function run( parser){
-	var config = require(parser.get('config') || './config.json');
-	var socket = io.connect(config.serverUrl);
-	var testexecution = require('./testexecution');
+if(config.device.platform==="android"){
+	waitForDevice();
+}else{
+	run();
+}
 
+function waitForDevice () {
 
+	var options = { encoding: 'utf8',
+					  timeout: 2000,
+					  maxBuffer: 200*1024,
+					  killSignal: 'SIGTERM',
+					  cwd: null,
+					  env: null 
+				};
+	var child = exec("adb devices",options,function(error, stdout, stderr) {
+	 	if(error != null){
+	 		console.log(error);
+	 	}
+	 	else if (stdout.trim().split('\n').length > 1){
+	 		if(isConnected===false){ 
+	 			console.log('device connected');
+	 			isConnected=true;
+	 			run();
+	 		};
+	 	}else{
+	 		if(isConnected===true){
+	 			console.log('device disconnected');
+	 			isConnected=false;
+	 			socket.disconnect();
+	 		} 
+	 	}
+	 });	
+	 setTimeout(waitForDevice,5*1000);
+}
+
+function run(){
+	socket=null;
+	console.log('inside Run...');
+	socket = io.connect(config.serverUrl,{'force new connection': true});
+	if(socket){
+		console.log('connection object created');
+	}
+	socket.on('connecting', function () {
+		console.log('connecting....');
+	});
+	socket.on('error', function () {
+		console.log("errorrr");
+	})
 	 socket.on('connect', function(){
-	 	console.log("Connecting Device");
+	 	console.log("Device Connected");
 	 	socket.emit('deviceInfo', config.device);
 
 	 	socket.on("execute",function(data){
@@ -39,7 +86,8 @@ function run( parser){
 	    
 	    socket.on('disconnect', function(){
 	    	console.log("Disconnected");
-	    	process.exit(0);
+	    	if(config.device.platform!=="android"){ process.exit(0); }
 	    });
 	 });
 }
+

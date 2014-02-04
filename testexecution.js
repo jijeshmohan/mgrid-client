@@ -32,8 +32,8 @@ function android_run(socket,id,config){
       };
       child = exec(command, options,function(error, stdout, stderr) {
             if (error !== null) {
-              console.log("Error while execution");
-                socket.emit('result',{result: {},id: id});
+                console.log("Error while execution" + error);
+                // socket.emit('result',{result: {},id: id});
             }
             var result = require(path +'/result.json');
             socket.emit('result',{result: result,id: id});
