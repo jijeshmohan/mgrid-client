@@ -80,6 +80,11 @@ function run(){
 	 		testexecution.run(socket,data.runitem.id,config);
 	 	});
 	    
+	    socket.on("get_scenarios",function(data){
+	 		console.log("request scenario lists.......");
+	 		testexecution.list(socket,config);
+	 	});
+
 	    socket.on('disconnect', function(){
 	    	console.log("Disconnected");
 	    	if(config.device.platform!=="android"){ process.exit(0); }
