@@ -67,8 +67,8 @@ function run(){
 	socket.on('connecting', function () {
 		console.log('connecting....');
 	});
-	socket.on('error', function () {
-		console.log("error while connecting to server");
+	socket.on('error', function (data) {
+		console.log("error while connecting to server :"+ data);
 	})
 	 socket.on('connect', function(){
 	 	console.log("Device Connected");
