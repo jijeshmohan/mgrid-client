@@ -83,6 +83,11 @@ function run(){
 	    socket.on("get_scenarios",function(data){
 	 		console.log("request scenario lists.......");
 	 		testexecution.list(socket,config);
+	 	});  
+
+	 	socket.on("execute_scenario",function(data){
+	 		console.log("execute scenario ......." + JSON.stringify(data));
+	 		testexecution.runScenario(socket,data.runitem_id,data.scenario,config);
 	 	});
 
 	    socket.on('disconnect', function(){

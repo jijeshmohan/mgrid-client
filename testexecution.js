@@ -13,6 +13,17 @@ exports.run = function(socket,id,config){
    }
 };
 
+
+exports.runScenario = function(socket,id,scenario,config){
+  if(config.type && config.type==="mvn"){
+      // TODO
+   }else if(config.type==="android"){
+     android_run(socket,id,config,scenario);
+   }else {
+     cucumber_run(socket,id,config,scenario);
+   }
+};
+
 exports.list=function(socket,config){
   if(config.type && config.type==="mvn"){
       console.log("Not implemented..")
@@ -21,7 +32,7 @@ exports.list=function(socket,config){
    }
 };
 
-function android_run(socket,id,config){
+function android_run(socket,id,config,scenario){
    var report_folder = new Date().getTime();
       var environment = process.env;
       var path = __dirname + "/" + config.reportDir + "/" + report_folder;
@@ -31,9 +42,11 @@ function android_run(socket,id,config){
       for(key in config.environment){
         environment[key]=config.environment[key];
       }
-
+    
       var command = 'calabash-android run '+ config.apk +' -f json -o '+ path +'/result.json';
-
+      if (typeof scenario !== 'undefined') {
+        command = command + " " + scenario.uri
+      }
       var options = {
         cwd: config.projectPath,
         env: environment
@@ -44,7 +57,11 @@ function android_run(socket,id,config){
                 // socket.emit('result',{result: {},id: id});
             }
             var result = require(path +'/result.json');
-            socket.emit('result',{result: result,id: id});
+            if (typeof scenario !== 'undefined') {
+              socket.emit('scenario_result',{result: result,id: id,scenario: scenario});
+            }else{
+               socket.emit('result',{result: result,id: id});
+            }
       });
 }
 
@@ -73,7 +90,7 @@ function maven_run(socket,id,config){
       });
 }
 
-function cucumber_run(socket,id,config){
+function cucumber_run(socket,id,config,scenario){
    var report_folder = new Date().getTime();
       var environment = process.env;
       var path = __dirname + "/" + config.reportDir + "/" + report_folder;
@@ -85,7 +102,9 @@ function cucumber_run(socket,id,config){
       }
 
       var command = 'cucumber -f json -o '+ path +'/result.json';
-
+      if (typeof scenario.uri !== 'undefined') {
+        command = command + " " + scenario.uri
+      }
       var options = {
         cwd: config.projectPath,
         env: environment
@@ -96,7 +115,11 @@ function cucumber_run(socket,id,config){
                 socket.emit('result',{result: {},id: id});
             }
             var result = require(path +'/result.json');
-            socket.emit('result',{result: result,id: id});
+             if (typeof scenario !== 'undefined') {
+              socket.emit('scenario_result',{result: result,id: id,scenario: scenario});
+            }else{
+               socket.emit('result',{result: result,id: id});
+            }
       });
 }
 
