@@ -102,7 +102,7 @@ function cucumber_run(socket,id,config,scenario){
       }
 
       var command = 'cucumber -f json -o '+ path +'/result.json';
-      if (typeof scenario.uri !== 'undefined') {
+      if (typeof scenario !== 'undefined') {
         command = command + " " + scenario.uri
       }
       var options = {
@@ -111,8 +111,8 @@ function cucumber_run(socket,id,config,scenario){
       };
       child = exec(command, options,function(error, stdout, stderr) {
             if (error !== null) {
-              console.log("Error while execution");
-                socket.emit('result',{result: {},id: id});
+                console.log("Error while execution");
+                // socket.emit('result',{result: {},id: id});
             }
             var result = require(path +'/result.json');
              if (typeof scenario !== 'undefined') {
