@@ -1,7 +1,7 @@
 mgrid-client
 ============
 
-Mobile grid client
+Mobile grid client. For more details about mgrid [click here](http://jijeshmohan.github.io/mgrid)
 
 
 ### Install
