@@ -45,33 +45,32 @@ function waitForDevice () {
 	 		console.log(error);
 	 	}else if(config.device.id){
 	 		if(findDevice(config.device.id,stdout.trim())){
-	 			if(isConnected===false){ 
-		 			console.log('device connected');
-		 			isConnected=true;
-		 			run();
-		 		};
+	 			connectIfNot();
 	 		}else{
-	 			if(isConnected===true){
-		 			console.log('device disconnected');
-		 			isConnected=false;
-		 			socket.disconnect();
-		 		} 
+	 			disconnect();
 	 		}
 	 	}else if (stdout.trim().split('\n').length > 1){
-	 		if(isConnected===false){ 
-	 			console.log('device connected');
-	 			isConnected=true;
-	 			run();
-	 		};
+	 		connectIfNot();
 	 	}else{
-	 		if(isConnected===true){
-	 			console.log('device disconnected');
-	 			isConnected=false;
-	 			socket.disconnect();
-	 		} 
+	 		disconnect();
 	 	}
 	 });	
 	 setTimeout(waitForDevice,5*1000);
+}
+
+function connectIfNot(){
+	if(isConnected===false){ 
+		console.log('device connected');
+		isConnected=true;
+		run();
+	};
+}
+function disconnect(){
+	if(isConnected===true){
+		console.log('device disconnected');
+		isConnected=false;
+		socket.disconnect();
+	} 
 }
 function findDevice (deviceId,txt) {
 	var lines = txt.split('\n')
